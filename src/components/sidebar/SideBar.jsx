@@ -7,7 +7,7 @@ import DropDown from "../ui/dropdown/DropDown";
 const SideBar = ({className, lists, ...props}) => {
     return (
         <nav className={classNames(classes.container, className)} {...props} >
-            {lists.map(list=><DropDown name={list.name} words={list.words}/>)}
+            {lists.map(list=><DropDown key={list.name} name={list.name} words={list.words}/>)}
         </nav>
     );
 };

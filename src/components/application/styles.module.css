@@ -1,3 +1,40 @@
 .container{
-
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+            "h h h h h h h"
+            "l l l m r r r"
+            "f f f f f f f";
+    grid-template-rows: 5% 90% 5%;
+}
+.hdr{
+    grid-area: h;
+    background-color: #d2a73b;
+}
+.lpnl{
+    grid-area: l;
+    background-color: #97c9a1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.mdl{
+    grid-area: m;
+}
+.rpnl{
+    grid-area: r;
+    background-color: #97c9a1;
+    display: flex;
+    row-gap: 10%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.ftr{
+    grid-area: f;
+    background-color: #61dafb;
+}
+.card{
+    margin: 5px;
 }
