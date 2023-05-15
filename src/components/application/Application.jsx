@@ -33,29 +33,15 @@ const Application = ({ className, ...props }) => {
             current: testReplaceWord,
         });
     };
-    const dragStart = (event) => {
-        event.target.style.opacity = ".4";
-        event.currentTarget.firstChild.classList.remove(classes.flipped);
-    };
-    const dragEnd = (event) => {
-        event.target.removeAttribute("style");
-    };
-    const cardClick = (event) => {
-        event.currentTarget.firstChild.classList.toggle(classes.flipped);
-    };
     return (
         <div className={classNames(className, classes.container)}>
             <div className={classes.hdr}></div>
             <div className={classes.lpnl}>
                 <Card
-                    draggable="true"
                     className={classes.card}
                     word={words.current}
-                    onDragStart={dragStart}
-                    onDragEnd={dragEnd}
-                    onClick={cardClick}
                 />
-                <Counter className={classes.counter2} value={counters.all} />
+                <Counter className={classes.counter} value={counters.all} />
             </div>
             <div className={classes.mdl}></div>
             <div className={classes.rpnl}>
@@ -66,9 +52,8 @@ const Application = ({ className, ...props }) => {
                     disabled
                     onDragOver={dragOver}
                     onDrop={dragDrop}
-                >
-                    <Counter className={classes.counter} value={counters.ok} />
-                </Card>
+                />
+                <Counter className={classes.counter} value={counters.ok} />
                 <Card
                     id={"unstudied"}
                     className={classes.card}
@@ -76,9 +61,8 @@ const Application = ({ className, ...props }) => {
                     disabled
                     onDragOver={dragOver}
                     onDrop={dragDrop}
-                >
-                    <Counter className={classes.counter} value={counters.not} />
-                </Card>
+                />
+                <Counter className={classes.counter} value={counters.not} />
             </div>
             <div className={classes.ftr}></div>
         </div>

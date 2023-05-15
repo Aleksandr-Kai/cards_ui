@@ -40,14 +40,9 @@
     margin: 5px;
 }
 .counter{
-    position: relative;
-    top: -8%;
-    left: -7%;
-}
-.counter2{
-    position: relative;
-    top: -35%;
-    left: -20%;
+    position: absolute;
+    /*top: -8%;*/
+    /*left: -7%;*/
 }
 .flipped{
     transform: rotateY(180deg);
