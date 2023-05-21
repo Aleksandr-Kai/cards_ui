@@ -45,3 +45,9 @@
 .flipped{
     transform: rotateY(180deg);
 }
+.stack{
+    background-color: #e5ffe5;
+    top: 10px;
+    border: 2px solid rgba(255, 0, 0, 0.204);
+    border-radius: 25px;
+}

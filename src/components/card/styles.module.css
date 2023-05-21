@@ -4,6 +4,7 @@
     height: 250px;
     perspective: 1000px;
     cursor: pointer;
+    margin: 15px;
 }
 .container h1{
     color: brown;
@@ -23,7 +24,7 @@
     position: relative;
     transform-style: preserve-3d;
     backface-visibility: hidden;
-    transition: .8s;
+    transition: .5s;
 }
 
 .cardface{
@@ -34,6 +35,21 @@
 
     background-color: bisque;
     box-shadow: 5px 5px 6px rgba(0, 0, 0, .2);
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardplace {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    backface-visibility: hidden;
+
+    border: 2px dashed rgba(0, 0, 0, .2);
 
     display: flex;
     flex-direction: column;

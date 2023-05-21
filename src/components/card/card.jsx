@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import classes from "./styles.module.css";
 
-const Card = ({ className, word, disabled, id, ...props }) => {
+const Card = ({ word, flipped, ...props }) => {
+	const disabled = flipped === undefined;
 	const dragStart = (event) => {
-		console.log(event.target);
-		console.log(event.currentTarget);
 		event.target.style.opacity = "0.1";
-		event.currentTarget.style.border = "1px dotted black";
+		event.currentTarget.style.border = "1px dashed rgba(0, 0, 0, .2)";
 		event.currentTarget.classList.remove(classes.flipped);
 	};
 	const dragEnd = (event) => {
@@ -15,30 +14,43 @@ const Card = ({ className, word, disabled, id, ...props }) => {
 		event.currentTarget.removeAttribute("style");
 		event.currentTarget.classList.remove(classes.flipped);
 	};
-	const cardClick = (event) => {
-		event.currentTarget.firstChild.classList.toggle(classes.flipped);
+	const getClass = (flipped) => {
+		return flipped ? classNames(classes.card, classes.flipped) : classes.card;
 	};
+	const [flipCard, setFlipCard] = useState(getClass(flipped));
+	useEffect(() => {
+		setFlipCard(getClass(flipped));
+	}, [flipped]);
 	return (
 		<div
-			className={classNames(className, classes.container)}
-			onClick={disabled ? null : cardClick}
+			className={classes.container}
 			onDragStart={dragStart}
 			onDragEnd={dragEnd}
+			draggable={!disabled}
 		>
-			<div
-				className={classes.card}
-				onDragOver={props.onDragOver}
-				onDrop={props.onDrop}
-			>
-				<div id={id} className={classes.cardface} draggable={!disabled}>
-					<h1>{word.word}</h1>
-					<h2>{word.word}</h2>
+			<div className={flipCard} onDragOver={props.onDragOver} onDrop={props.onDrop}>
+				<div
+					className={word !== undefined ? classes.cardface : classes.cardplace}
+					draggable={!disabled}
+					type={props.type}
+				>
+					{word ? (
+						<>
+							<h1>{word.word}</h1>
+							<h2>{word.word}</h2>
+						</>
+					) : (
+						<h1>No Cards</h1>
+					)}
 				</div>
-				{disabled || (
-					<div className={classNames(classes.cardface, classes.cardfaceback)}>
-						<h1>{word.meaning}</h1>
-					</div>
-				)}
+				{word &&
+					(disabled || (
+						<div
+							className={classNames(classes.cardface, classes.cardfaceback)}
+						>
+							<h1>{word.meaning}</h1>
+						</div>
+					))}
 			</div>
 		</div>
 	);
