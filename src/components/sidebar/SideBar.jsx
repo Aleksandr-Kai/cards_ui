@@ -1,43 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import classes from "./styles.module.css";
 import DropDown from "../ui/dropdown/DropDown";
 import { getRequest } from "../../apitools.js";
 
-const SideBar = ({className, showList, ...props}) => {
-    const [lists, setLists] = useState([]);
+const SideBar = ({ className, lists, ...props }) => {
+	const [fullLists, setLists] = useState([]);
 
-    useEffect(() =>
-		{
-            if(showList)
-            getRequest("/lists")
-			.then((data) => {
-				if (data.error) {
-					alert(data.error);
-					return [];
-				}
-				return data.Lists;
-			})
-			.then((lists) => {
-				let promises = lists.map((list, index) =>
-					getRequest(`/lists/${list.id}/words`).then((data) => {
-						lists[index].words = data.Words.map((word) => word.word);
-					})
-				);
-				Promise.all(promises).then(() => {
-					setLists(lists);
+	useEffect(() => {
+		let result = [];
+		let promises = lists.map((list) =>
+			getRequest(`/lists/${list.id}/words`).then((data) => {
+				result.push({
+					name: list.name,
+					words: data.Words.map((word) => word.word),
 				});
 			})
-			.catch((err) => alert(err));
-        else
-            setLists([]);
-    }, [showList])
+		);
+		Promise.all(promises).then(() => {
+			setLists(result);
+		});
+	}, [lists]);
 
-    return (
-        <nav className={classNames(classes.container, className)} {...props} >
-            {lists.map(list=><DropDown key={list.name} name={list.name} words={list.words}/>)}
-        </nav>
-    );
+	return (
+		<nav className={classNames(classes.container, className)} {...props}>
+			{fullLists.map((list) => (
+				<DropDown key={list.name} name={list.name} words={list.words} />
+			))}
+		</nav>
+	);
 };
 
 export default SideBar;

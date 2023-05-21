@@ -37,3 +37,9 @@
     width: 10em;
     height: fit-content;
 }
+.textEmpty {
+    color: rgb(110, 0, 0);
+    font-size: 1.5em;
+    font-weight: 700;
+    /* text-shadow: 5px 5px 5px #0e0e0e; */
+}

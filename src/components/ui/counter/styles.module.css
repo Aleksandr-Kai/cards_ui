@@ -1,14 +1,13 @@
 .counter{
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    /* background: radial-gradient(circle, rgba(177,177,177,1) 35%, rgba(255,166,0,1) 96%, rgba(255,166,0,1) 100%); */
-    /* background: linear-gradient(transparent, gray); */
-    background: radial-gradient(circle, rgba(128,128,128,1) 40%, rgba(0,0,0,0) 80%);
+    border-radius: 35%;
+    /* background: radial-gradient(circle, rgba(128,128,128,1) 30%, rgba(0,0,0,0) 100%); */
+    border: 2px dashed rgb(87, 87, 87);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    opacity: 80%;
-    box-shadow: 5px 5px 6px rgba(0, 0, 0, .2);
+    /* opacity: 80%; */
+    box-shadow: 5px 5px 6px rgba(0, 0, 0, .4);
 }

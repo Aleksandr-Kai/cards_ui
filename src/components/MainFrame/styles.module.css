@@ -40,9 +40,7 @@
     margin: 5px;
 }
 .counter{
-    position: absolute;
-    /*top: -8%;*/
-    /*left: -7%;*/
+    position: relative;
 }
 .flipped{
     transform: rotateY(180deg);
