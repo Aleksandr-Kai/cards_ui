@@ -7,6 +7,7 @@ import { getRequest } from "./apitools.js";
 
 function App() {
 	const [lists, setLists] = useState([]);
+	const [selectedList, setSelectedList] = useState([]);
 
 	const updateLists = (loadLists) => {
 		if (loadLists)
@@ -24,15 +25,33 @@ function App() {
 	};
 
 	useEffect(() => {
-		if (localStorage.token) updateLists();
+		if (localStorage.token) updateLists(true);
 	}, []);
+
+	const selectList = (event) => {
+		let id = event.target.getAttribute("id");
+		getRequest(`/lists/${id}/words`).then((data) => {
+			let words = data.Words.filter((word) => {
+				return !word.studied;
+			}).map((word) => {
+				return { id: word.id, word: word.word, meaning: word.translation };
+			});
+			setSelectedList(words);
+		});
+		// setSelectedList([...testWords]);
+		// console.log(selectedList);
+	};
 
 	return (
 		<div className={classes.wrapper}>
 			<Header className={classes.header} onAuth={updateLists} />
 			<div className={classes.bodycontainer}>
-				<SideBar className={classes.sidebar} lists={lists} />
-				<Application className={classes.content} />
+				<SideBar
+					className={classes.sidebar}
+					lists={lists}
+					onSelect={selectList}
+				/>
+				<Application className={classes.content} words={selectedList} />
 			</div>
 		</div>
 	);

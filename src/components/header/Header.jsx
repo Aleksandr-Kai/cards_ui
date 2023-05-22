@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { signin, signout } from "../../apitools.js";
 
 const Header = ({ className, onAuth }) => {
-	const [userName, setUserName] = useState("");
+	const [userName, setUserName] = useState(localStorage.user);
 
 	const logout = () => {
 		signout();

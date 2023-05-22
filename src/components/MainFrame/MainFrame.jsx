@@ -4,35 +4,16 @@ import classes from "./styles.module.css";
 import Card from "../card/card";
 import Counter from "../ui/counter/counter";
 
-// const testWords = [
-// 	{
-// 		id: 0,
-// 		word: "TestWord",
-// 		meaning: "TestMeaning",
-// 	},
-// 	{
-// 		id: 1,
-// 		word: "ReplaceWord",
-// 		meaning: "ReplaceMeaning",
-// 	},
-// 	{
-// 		id: 2,
-// 		word: "ReplaceWord 2",
-// 		meaning: "ReplaceMeaning 2",
-// 	},
-// 	{
-// 		id: 3,
-// 		word: "ReplaceWord 3",
-// 		meaning: "ReplaceMeaning 3",
-// 	},
-// ];
-
 const MainFrame = ({ className, words }) => {
-	words = words || [];
 	const [listWords, setListWords] = useState([...words]);
 	const [studied, setStudied] = useState([]);
 	const [unstudied, setUnStudied] = useState([]);
 
+	useEffect(() => {
+		setListWords(words);
+		setStudied([]);
+		setUnStudied([]);
+	}, [words]);
 	const getCurrentWord = () => {
 		return listWords.length > 0 ? listWords[0] : undefined;
 	};
@@ -47,7 +28,10 @@ const MainFrame = ({ className, words }) => {
 		event.preventDefault();
 	};
 	const dragDrop = (event) => {
-		switch (event.target.getAttribute("type")) {
+		let attr =
+			event.target.getAttribute("type") ||
+			event.target.parentNode.getAttribute("type");
+		switch (attr) {
 			case "studied":
 				setStudied([listWords[0], ...studied]);
 				break;
@@ -55,7 +39,7 @@ const MainFrame = ({ className, words }) => {
 				setUnStudied([listWords[0], ...unstudied]);
 				break;
 			default:
-				break;
+				return;
 		}
 		if (!flippedCard) {
 			setFlipCard(true);
