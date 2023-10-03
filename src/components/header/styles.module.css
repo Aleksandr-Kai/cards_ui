@@ -1,8 +1,22 @@
-.container{
-    padding: 1%;
-    border: 1px solid #145222;
-    background-color: #145222;
-    align-items: end;
-    display: flex;
-    flex-direction: column;
+.container {
+	background-color: #145222;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	text-shadow: 0em 0em 0.5em #e5ffe5;
+}
+img {
+	width: 3rem;
+	opacity: 50%;
+	rotate: -35deg;
+}
+.container h1 {
+	width: 10rem;
+	text-transform: capitalize;
+	font-family: "Dancing Script", cursive;
+	border-radius: 0.5rem;
+	text-shadow: none;
+	padding: 0 1rem;
+	box-shadow: inset 0em 0em 0.5em #e5ffe586;
+	cursor: default;
 }

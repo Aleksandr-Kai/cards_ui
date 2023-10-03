@@ -1,8 +1,16 @@
 const BaseURL = "http://localhost:3000/api";
 
 export async function postRequest(path = "/", body = {}) {
+	return apiRequest("POST", path, body);
+}
+
+export async function getRequest(path = "/", params = {}) {
+	return apiRequest("GET", path);
+}
+
+export async function apiRequest(method = "GET", path = "/", body) {
 	return fetch(BaseURL + path, {
-		method: "POST",
+		method: method,
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",
 			authorization: localStorage.token,
@@ -11,19 +19,8 @@ export async function postRequest(path = "/", body = {}) {
 	}).then((resp) => resp.json());
 }
 
-export async function getRequest(path = "/", params = {}) {
-	// console.log(`GET ${BaseURL + path}`);
-	return fetch(BaseURL + path, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json;charset=utf-8",
-			authorization: localStorage.token,
-		},
-	}).then((resp) => resp.json());
-}
-
 export async function signin(login, password) {
-	return fetch("http://localhost:3000/api/auth/login", {
+	return fetch(BaseURL + "/auth/login", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json;charset=utf-8",

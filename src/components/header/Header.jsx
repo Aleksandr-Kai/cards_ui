@@ -1,32 +1,39 @@
 import React, { useState } from "react";
 import classes from "./styles.module.css";
 import MyButton from "../ui/button/MyButton";
-import AuthForm from "../authform/AuthForm";
 import classNames from "classnames";
-import { signin, signout } from "../../apitools.js";
+import { signout } from "../../apitools.js";
+import MyNav from "../ui/nav/MyNav";
 
-const Header = ({ className, onAuth }) => {
+const Header = ({ className, onLogout, toggleListsSidebar }) => {
 	const [userName, setUserName] = useState(localStorage.user);
 
 	const logout = () => {
 		signout();
-		onAuth(false);
+		onLogout();
 		setUserName("");
-	};
-	const login = (name, password) => {
-		signin(name, password)
-			.then(() => onAuth(true))
-			.then(() => setUserName(name));
 	};
 	return (
 		<div className={classNames(classes.container, className)}>
+			<img src="read-book-icon.svg" />
 			{Boolean(localStorage.token) ? (
 				<>
-					<MyButton onClick={logout}>Выйти</MyButton>
-					<h3>{userName}</h3>
+					<MyNav
+						items={[
+							{
+								id: "itemLists",
+								text: "Word lists",
+								click: toggleListsSidebar,
+							},
+							// { id: "itemActions", text: "Actions" },
+							{ id: "itemAbout", text: "About" },
+						]}
+					/>
+					<h1>{userName}</h1>
+					<MyButton onClick={logout}>X</MyButton>
 				</>
 			) : (
-				<AuthForm confirm={login} />
+				<></>
 			)}
 		</div>
 	);

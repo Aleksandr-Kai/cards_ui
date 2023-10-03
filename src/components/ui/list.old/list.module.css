@@ -1,0 +1,21 @@
+.container {
+	display: flex;
+	flex-direction: column;
+}
+.row {
+	display: grid;
+	grid-template-columns: 4fr 4fr 1fr;
+}
+.cell {
+	padding: 0 1rem;
+	height: 2rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	cursor: pointer;
+	/* text-shadow: 0.1rem 0.2rem 0.3rem #2d723b; */
+	border: 1px solid #97c9a1;
+}
+.cell:hover {
+	box-shadow: inset 0em 0em 1em #2d723ba1;
+}

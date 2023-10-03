@@ -1,0 +1,17 @@
+.menu {
+	list-style-type: none;
+	text-decoration: none;
+	display: flex;
+	width: 50%;
+}
+.menu li {
+	display: block;
+	cursor: pointer;
+	padding: 1rem 0;
+	width: 8rem;
+	text-align: center;
+	font-size: x-large;
+}
+.menu li:hover {
+	background-color: #e5ffe5;
+}

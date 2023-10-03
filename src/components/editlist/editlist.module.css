@@ -1,0 +1,21 @@
+.list {
+    margin-bottom: 0.1rem;
+}
+.btn {
+    width: 20%;
+    background-color: aliceblue;
+}
+.btnBox {
+    display: flex;
+    flex-direction: row;
+    gap: 0.1rem;
+    width: 100%;
+    justify-content: space-evenly;
+    /* background-color: bisque; */
+    padding-top: 1rem;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

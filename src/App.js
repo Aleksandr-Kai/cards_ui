@@ -1,58 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "./components/header/Header";
-import classes from "./styles.module.css";
-import SideBar from "./components/sidebar/SideBar";
+import classes from "./app.module.css";
+import MenuWordLists from "./components/menuwordlists/MenuWordLists";
 import Application from "./components/MainFrame/MainFrame";
-import { getRequest } from "./apitools.js";
+import AuthForm from "./components/authform/AuthForm";
 
 function App() {
-	const [lists, setLists] = useState([]);
-	const [selectedList, setSelectedList] = useState([]);
-
-	const updateLists = (loadLists) => {
-		if (loadLists)
-			getRequest("/lists")
-				.then((data) => {
-					if (data.error) {
-						console.log(data.error);
-						setLists([]);
-						return;
-					}
-					setLists(data.Lists);
-				})
-				.catch((err) => alert(`Catched error: ${err.message}`));
-		else setLists([]);
-	};
-
-	useEffect(() => {
-		if (localStorage.token) updateLists(true);
-	}, []);
-
-	const selectList = (event) => {
-		let id = event.target.getAttribute("id");
-		getRequest(`/lists/${id}/words`).then((data) => {
-			let words = data.Words.filter((word) => {
-				return !word.studied;
-			}).map((word) => {
-				return { id: word.id, word: word.word, meaning: word.translation };
-			});
-			setSelectedList(words);
-		});
-		// setSelectedList([...testWords]);
-		// console.log(selectedList);
-	};
+	const [currentWords, setCurrentWords] = useState([]);
+	const [showLists, setShowLists] = useState(false);
 
 	return (
-		<div className={classes.wrapper}>
-			<Header className={classes.header} onAuth={updateLists} />
-			<div className={classes.bodycontainer}>
-				<SideBar
-					className={classes.sidebar}
-					lists={lists}
-					onSelect={selectList}
+		<div className={classes.wrapper} onClick={() => setShowLists(false)}>
+			<Header
+				className={classes.header}
+				toggleListsSidebar={(event) => {
+					event.stopPropagation();
+					setShowLists(!showLists);
+				}}
+				onLogout={() => setCurrentWords([])}
+			/>
+			{Boolean(localStorage.token) ? (
+				<>
+					{showLists && (
+						<MenuWordLists
+							className={classes.sidebar}
+							onSelect={(words) => {
+								setShowLists(false);
+								setCurrentWords(words);
+							}}
+						/>
+					)}
+					<Application words={currentWords} />
+				</>
+			) : (
+				<AuthForm
+					resolve={() => setCurrentWords([])}
+					reject={(err) => console.log(`Error: ${err}`)}
 				/>
-				<Application className={classes.content} words={selectedList} />
-			</div>
+			)}
 		</div>
 	);
 }

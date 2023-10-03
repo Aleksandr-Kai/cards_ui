@@ -26,12 +26,12 @@ const Card = ({ word, flipped, ...props }) => {
 			className={classes.container}
 			onDragStart={dragStart}
 			onDragEnd={dragEnd}
-			draggable={!disabled}
+			draggable={word && !disabled}
 		>
 			<div className={flipCard} onDragOver={props.onDragOver} onDrop={props.onDrop}>
 				<div
 					className={word !== undefined ? classes.cardface : classes.cardplace}
-					draggable={!disabled}
+					draggable={word && !disabled}
 					type={props.type}
 				>
 					{word ? (

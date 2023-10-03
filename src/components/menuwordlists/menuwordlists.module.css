@@ -1,0 +1,82 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+	z-index: 10;
+}
+.menuItem {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	padding: 0 1rem;
+	height: 2rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(-90deg, #e5ffe5, #97c9a1);
+	cursor: pointer;
+
+	color: #2d723b;
+	text-shadow: 0 0 1px #97c9a1;
+}
+.menuItem:hover {
+	background: linear-gradient(90deg, #e5ffe5, #97c9a1);
+	justify-content: end;
+}
+.listName {
+}
+.listName:hover {
+	justify-content: space-between;
+	text-align: right;
+}
+.menuItem:hover .listButton {
+	display: block;
+}
+.menuItem input {
+	width: 100%;
+}
+.menuItem button {
+	padding: 0 1rem;
+	margin-left: 1rem;
+}
+.listWords {
+	list-style: none;
+	padding: 20px;
+	position: absolute;
+	left: 101%;
+	top: 0.2rem;
+	overflow: hidden;
+	text-align: left;
+	min-height: 3em;
+	max-height: 30rem;
+	width: 10rem;
+	background: linear-gradient(-90deg, #e5ffe5, #97c9a1);
+	border-radius: 0.5rem;
+	text-transform: capitalize;
+}
+.textEmpty {
+	color: rgb(110, 0, 0);
+	font-size: 1.2em;
+	font-weight: 700;
+}
+.listButton {
+	display: none;
+	height: 1.5rem;
+	padding: 0.2rem 1rem;
+	border: 1px solid #97c9a100;
+}
+.listButton:hover {
+	border: 1px solid #97c9a1;
+	border-radius: 0.4rem;
+}
+
+.listBtnBlock {
+	display: flex;
+	flex-direction: row;
+}
+nav > div:last-child {
+	color: #97c9a1;
+	text-shadow: 0 0 1px #97c9a1;
+}
+nav > div:last-child:hover {
+	color: #2d723b;
+}

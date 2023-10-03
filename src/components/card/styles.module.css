@@ -1,67 +1,88 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
-.container{
-    width: 300px;
-    height: 250px;
-    perspective: 1000px;
-    cursor: pointer;
-    margin: 15px;
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
+.container {
+	/* width: 20rem;
+	height: 15rem; */
+	width: 18rem;
+	height: 12rem;
+	perspective: 1000px;
+	cursor: pointer;
+	margin: 15px;
 }
-.container h1{
-    color: brown;
-    text-transform: capitalize;
-}
-
-.container h2{
-    color: cornflowerblue;
-    text-transform: capitalize;
-    font-family: 'Dancing Script', cursive;
+.container h1 {
+	color: brown;
+	text-transform: capitalize;
 }
 
-.card{
-    width: 100%;
-    height: 100%;
-    
-    position: relative;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    transition: .5s;
+.container h2 {
+	color: cornflowerblue;
+	text-transform: capitalize;
+	font-family: "Dancing Script", cursive;
 }
 
-.cardface{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    backface-visibility: hidden;
+.card {
+	width: 100%;
+	height: 100%;
 
-    background-color: bisque;
-    box-shadow: 5px 5px 6px rgba(0, 0, 0, .2);
+	position: relative;
+	transform-style: preserve-3d;
+	backface-visibility: hidden;
+	transition: 0.5s;
+}
 
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
+.cardface {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	backface-visibility: hidden;
+
+	background-color: bisque;
+	box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.2);
+
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: center;
+	justify-content: center;
 }
 
 .cardplace {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    backface-visibility: hidden;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	backface-visibility: hidden;
 
-    border: 2px dashed rgba(0, 0, 0, .2);
+	border: 2px dashed rgba(0, 0, 0, 0.2);
 
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	align-items: center;
+	justify-content: center;
 }
 
-.cardfaceback{
-    transform: rotateY(180deg);
+.cardfaceback {
+	transform: rotateY(180deg);
 }
 
-.flipped{
-    transform: rotateY(180deg);
+.flipped {
+	transform: rotateY(180deg);
+}
+
+@media (max-width: 1024px) {
+	.container {
+		width: 12rem;
+		height: 8rem;
+		perspective: 1000px;
+		cursor: pointer;
+		margin: 15px;
+	}
+}
+@media (max-width: 768px) {
+	.container {
+		width: 9rem;
+		height: 8rem;
+		perspective: 1000px;
+		cursor: pointer;
+		/* margin: 15px; */
+	}
 }

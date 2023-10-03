@@ -1,53 +1,67 @@
-.container{
-    height: 100%;
-    display: grid;
-    grid-template-areas:
-            "h h h h h h h"
-            "l l l m r r r"
-            "f f f f f f f";
-    grid-template-rows: 5% 90% 5%;
+.container {
+	/* height: 49rem; */
+	display: grid;
+	grid-template-areas:
+		"h h h"
+		"l m r"
+		"f f f";
+	grid-template-rows: 2rem 42rem 2rem;
 }
-.hdr{
-    grid-area: h;
-    background-color: #e5ffe5;
+.hdr {
+	grid-area: h;
+	background-color: #e5ffe5;
+	/* background-color: #b3b3b3; */
 }
-.lpnl{
-    grid-area: l;
-    background-color: #e5ffe5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.lpnl {
+	grid-area: l;
+	background-color: #e5ffe5;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
-.mdl{
-    grid-area: m;
-    background-color: #e5ffe5;
+.mdl {
+	grid-area: m;
+	background-color: #e5ffe5;
 }
-.rpnl{
-    grid-area: r;
-    background-color: #e5ffe5;
-    display: flex;
-    row-gap: 10%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.rpnl {
+	grid-area: r;
+	background-color: #e5ffe5;
+	display: flex;
+	row-gap: 5rem;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
-.ftr{
-    grid-area: f;
-    background-color: #e5ffe5;
+.ftr {
+	grid-area: f;
+	background-color: #145222;
+	/* background-color: #e5ffe5; */
 }
-.card{
-    margin: 5px;
+.card {
+	margin: 5px;
 }
-.counter{
-    position: relative;
+.counter {
+	position: relative;
 }
-.flipped{
-    transform: rotateY(180deg);
+.flipped {
+	transform: rotateY(180deg);
 }
-.stack{
-    background-color: #e5ffe5;
-    top: 10px;
-    border: 2px solid rgba(255, 0, 0, 0.204);
-    border-radius: 25px;
+.stack {
+	background-color: #e5ffe5;
+	top: 10px;
+	border: 2px solid rgba(255, 0, 0, 0.204);
+	border-radius: 25px;
+}
+@media (max-width: 1000px) {
+	.mdl {
+		display: none;
+	}
+	.container {
+		grid-template-areas:
+			"h h"
+			"l r"
+			"f f";
+		grid-template-rows: 5% 90% 5%;
+	}
 }

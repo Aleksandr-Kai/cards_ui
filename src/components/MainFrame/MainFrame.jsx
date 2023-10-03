@@ -42,11 +42,7 @@ const MainFrame = ({ className, words }) => {
 				return;
 		}
 		if (!flippedCard) {
-			setFlipCard(true);
-			setTimeout(() => {
-				setFlipCard(false);
-				nextWord();
-			}, 150);
+			nextWord();
 		} else {
 			setFlipCard(false);
 			setTimeout(nextWord, 250);
