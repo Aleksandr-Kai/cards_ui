@@ -90,10 +90,7 @@ function EditList({ data, defaultRow, className, listUpdate }) {
                 <CellButton
                     className={classes.btn}
                     text={"Cancel"}
-                    action={() => {
-                        console.log(storedData);
-                        listUpdate();
-                    }}
+                    action={() => listUpdate()}
                 />
             </div>
         </div>
