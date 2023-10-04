@@ -1,39 +1,86 @@
 import classNames from "classnames";
+import classesEx from "./celldecor.module.css";
 import classes from "./listrow.module.css";
-import Cell from "../cell/Cell";
 import CellButton from "../cell/CellButton";
 import CellEx from "../cell/CellEx";
 
 function ListRow({ className, data, updateData, newItem }) {
     return (
         <div className={classNames(className, classes.row)}>
-            <Cell
-                className={classes.cell}
-                text={data.word}
-                updateValue={(value) =>
-                    updateData({ ...data, action: "update", word: value })
-                }
-            />
-            <Cell
-                className={classes.cell}
-                text={data.translation}
-                updateValue={(value) =>
-                    updateData({
-                        ...data,
-                        action: "update",
-                        translation: value,
-                    })
-                }
-            />
+            {data.studied ? (
+                <>
+                    <CellEx
+                        className={classNames(
+                            classes.cell,
+                            classesEx.decorCell,
+                            classesEx.decorStudied
+                        )}
+                        valueType="statictext"
+                        value={data.word}
+                    />
+                    <CellEx
+                        className={classNames(
+                            classes.cell,
+                            classesEx.decorCell,
+                            classesEx.decorStudied
+                        )}
+                        valueType="statictext"
+                        value={data.translation}
+                    />
+                </>
+            ) : (
+                <>
+                    <CellEx
+                        className={classNames(
+                            classes.cell,
+                            classesEx.decorCell
+                        )}
+                        valueType="text"
+                        value={data.word}
+                        updateValue={(value) =>
+                            updateData({
+                                ...data,
+                                action: "update",
+                                word: value,
+                            })
+                        }
+                    />
+                    <CellEx
+                        className={classNames(
+                            classes.cell,
+                            classesEx.decorCell
+                        )}
+                        valueType="text"
+                        value={data.translation}
+                        updateValue={(value) =>
+                            updateData({
+                                ...data,
+                                action: "update",
+                                translation: value,
+                            })
+                        }
+                    />
+                </>
+            )}
             {newItem ? (
                 <CellEx
-                    className={classes.boolcell}
+                    className={classNames(
+                        classes.boolcell,
+                        classesEx.decorCell,
+                        data.word == "" &&
+                            data.translation == "" &&
+                            classesEx.graytext
+                    )}
                     valueType="statictext"
-                    value={"No"}
+                    value={"N"}
                 />
             ) : (
                 <CellEx
-                    className={classes.boolcell}
+                    className={classNames(
+                        classes.boolcell,
+                        classesEx.decorCell,
+                        data.studied && classesEx.graytext
+                    )}
                     valueType="boolean"
                     value={data.studied}
                     updateValue={(value) =>
@@ -46,6 +93,7 @@ function ListRow({ className, data, updateData, newItem }) {
                 />
             )}
             <CellButton
+                className={classesEx.decorCell}
                 text={newItem ? "+" : "X"}
                 action={() => {
                     if (data.word === "" || data.translation === "") {
