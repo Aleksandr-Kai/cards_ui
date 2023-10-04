@@ -1,44 +1,48 @@
 .decorHeader {
-    border: 1px solid rgba(214, 255, 216, 0.753);
-    background-color: rgb(85, 187, 90);
-    color: black;
-    text-shadow: 1px 1px 2px rgb(214, 255, 216);
-    text-transform: uppercase;
-    cursor: default;
+	border: 1px solid rgba(214, 255, 216, 0.753);
+	background-color: #145222;
+	color: rgba(214, 255, 216, 0.753);
+	text-transform: uppercase;
+	cursor: default;
 }
 
 .decorCell {
-    border: 1px solid rgb(85, 187, 90);
-    background-color: rgb(214, 255, 216);
-    text-transform: capitalize;
+	border: 1px solid rgb(85, 187, 90);
+	background-color: rgb(214, 255, 216);
+	text-transform: capitalize;
+	cursor: default;
 }
 .decorCell:hover {
-    border: 1px solid rgba(214, 255, 216, 0.753);
-    background-color: rgb(85, 187, 90);
-    color: rgb(214, 255, 216);
-    text-shadow: 1px 1px 2px black;
+	border: 1px solid rgba(214, 255, 216, 0.753);
+	background-color: rgb(85, 187, 90);
+	color: rgb(214, 255, 216);
+	text-shadow: 1px 1px 2px black;
 }
 .decorCell:focus {
-    background-color: aliceblue;
+	background-color: aliceblue;
 }
 .decorCell:focus:hover {
-    color: black;
-    background-color: aliceblue;
-    text-shadow: none;
+	color: black;
+	background-color: aliceblue;
+	text-shadow: none;
 }
 .decorCell:last-child {
-    color: rgb(85, 187, 90);
+	color: rgb(85, 187, 90);
 }
 .decorCell:last-child:hover {
-    color: rgb(214, 255, 216);
+	color: rgb(214, 255, 216);
 }
 
 .decorStudied {
-    text-decoration: line-through;
-    /* background-color: rgb(224, 224, 224); */
-    color: rgb(150, 150, 150);
+	text-decoration: line-through;
+	color: rgb(150, 150, 150);
+	cursor: no-drop;
 }
 
+/* .decorStudied + .decorCell:not(.decorStudied) {
+	background-color: #145222;
+} */
+
 .graytext {
-    color: rgb(150, 150, 150);
+	color: rgb(150, 150, 150);
 }

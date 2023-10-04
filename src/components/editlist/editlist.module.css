@@ -1,21 +1,33 @@
 .list {
-    margin-bottom: 0.1rem;
+	margin-bottom: 0.1rem;
 }
 .btn {
-    width: 20%;
-    background-color: aliceblue;
+	width: 20%;
+	background-color: aliceblue;
 }
 .btnBox {
-    display: flex;
-    flex-direction: row;
-    gap: 0.1rem;
-    width: 100%;
-    justify-content: space-evenly;
-    /* background-color: bisque; */
-    padding-top: 1rem;
+	display: flex;
+	flex-direction: row;
+	gap: 0.1rem;
+	width: 100%;
+	justify-content: space-evenly;
+	/* background-color: bisque; */
+	padding-top: 1rem;
 }
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.decorCell {
+	border: 1px solid rgb(85, 187, 90);
+	background-color: rgb(214, 255, 216);
+	text-transform: capitalize;
+	cursor: default;
+}
+.decorCell:hover {
+	border: 1px solid rgba(214, 255, 216, 0.753);
+	background-color: rgb(85, 187, 90);
+	color: rgb(214, 255, 216);
+	text-shadow: 1px 1px 2px black;
 }
