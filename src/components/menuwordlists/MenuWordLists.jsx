@@ -4,12 +4,23 @@ import classes from "./menuwordlists.module.css";
 import { apiRequest, getRequest, postRequest } from "../../apitools.js";
 import EditList from "../../components/editlist/EditList";
 
+async function requestWords(list) {
+    return getRequest(`/lists/${list.id}/words`).then((data) => {
+        return {
+            id: list.id,
+            name: list.name,
+            words: data.Words,
+        };
+    });
+}
+
 const MenuWordLists = ({ className, onSelect, ...props }) => {
     const [lists, setLists] = useState([]);
     const [editList, setEditList] = useState(null);
 
     const [hover, setHover] = useState(null);
     const [words, setWords] = useState(null);
+    const [showWords, setShowWords] = useState(false);
     const [newListName, setNewListName] = useState(null);
 
     useEffect(() => {
@@ -24,22 +35,7 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
                 }
                 return data.Lists;
             })
-            .then(async (rawLists) => {
-                let result = [];
-                let promises = rawLists.map((list) =>
-                    getRequest(`/lists/${list.id}/words`).then((data) => {
-                        result.push({
-                            id: list.id,
-                            name: list.name,
-                            words: data.Words,
-                        });
-                    })
-                );
-                return Promise.all(promises).then(() => {
-                    result.sort((a, b) => a.id - b.id);
-                    setLists(result);
-                });
-            })
+            .then(setLists)
             .catch((err) => {
                 console.log(err.message);
                 setLists([]);
@@ -79,13 +75,13 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
             });
     };
 
-    const getWords = async (listId) => {
+    const getWords = async (listId, all) => {
         if (!listId) return null;
         return getRequest(`/lists/${listId}/words`).then((data) => {
-            let words = data.Words.filter((word) => !word.studied).map(
-                (word) => word.word
-            );
-            return { listId, words };
+            let rawWords = all
+                ? data.Words
+                : data.Words.filter((word) => !word.studied);
+            return { listId, words: rawWords.map((word) => word.word) };
         });
     };
 
@@ -197,7 +193,7 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
                             className={classes.listButton}
                             onClick={(event) => {
                                 event.stopPropagation();
-                                setEditList(list);
+                                requestWords(list).then(setEditList);
                             }}
                         >
                             Edit
