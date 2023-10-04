@@ -3,6 +3,7 @@ import classes from "./editlist.module.css";
 import ListRow from "../listrow/ListRow";
 import { useEffect, useState } from "react";
 import CellButton from "../cell/CellButton";
+import ListRowHeader from "../listrow/ListRowHeader";
 
 const idPrefix = "#";
 
@@ -36,6 +37,7 @@ function EditList({ data, defaultRow, className, listUpdate }) {
             onClick={(e) => e.stopPropagation()}
         >
             <div>
+                <ListRowHeader />
                 {storedData.map((item) => {
                     return (
                         Boolean(item.action !== "delete") && (
@@ -88,7 +90,10 @@ function EditList({ data, defaultRow, className, listUpdate }) {
                 <CellButton
                     className={classes.btn}
                     text={"Cancel"}
-                    action={() => listUpdate()}
+                    action={() => {
+                        console.log(storedData);
+                        listUpdate();
+                    }}
                 />
             </div>
         </div>
