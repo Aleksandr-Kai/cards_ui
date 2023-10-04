@@ -36,8 +36,8 @@ function EditList({ data, defaultRow, className, listUpdate }) {
 			className={classNames(className, classes.container)}
 			onClick={(e) => e.stopPropagation()}
 		>
-			<div>
-				<ListRowHeader />
+			<ListRowHeader />
+			<div className={classes.scrollable}>
 				{storedData.map((item) => {
 					return (
 						Boolean(item.action !== "delete") && (
