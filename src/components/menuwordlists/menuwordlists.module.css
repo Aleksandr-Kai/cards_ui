@@ -49,7 +49,7 @@
 	min-height: 3em;
 	max-height: 30rem;
 	width: 10rem;
-	background: linear-gradient(-90deg, #e5ffe5, #97c9a1);
+	background: linear-gradient(0deg, #e5ffe5, #97c9a1);
 	border-radius: 0.5rem;
 	text-transform: capitalize;
 }
