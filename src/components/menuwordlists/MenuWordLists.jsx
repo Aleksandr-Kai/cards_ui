@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import classes from "./menuwordlists.module.css";
 import { apiRequest, getRequest, postRequest } from "../../apitools.js";
-// import ListEdit from "../listedit/ListEdit";
 import EditList from "../../components/editlist/EditList";
 
 const MenuWordLists = ({ className, onSelect, ...props }) => {
@@ -71,7 +70,6 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
         postRequest("/lists", { listName: newListName })
             .then((resp) => {
                 updateLists();
-                // console.log(resp);
             })
             .catch((err) => {
                 console.log(err);
@@ -110,7 +108,6 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
         apiRequest("DELETE", `/lists/${listId}`)
             .then((resp) => {
                 if (resp.error === undefined) updateLists();
-                // console.log(resp);
             })
             .catch((err) => {
                 console.log(err);
