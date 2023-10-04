@@ -2,7 +2,7 @@ import classNames from "classnames";
 import classes from "./listrow.module.css";
 import Cell from "../cell/Cell";
 import CellButton from "../cell/CellButton";
-import { useEffect, useState } from "react";
+import CellEx from "../cell/CellEx";
 
 function ListRow({ className, data, updateData, newItem }) {
     return (
@@ -25,6 +25,26 @@ function ListRow({ className, data, updateData, newItem }) {
                     })
                 }
             />
+            {newItem ? (
+                <CellEx
+                    className={classes.boolcell}
+                    valueType="statictext"
+                    value={"No"}
+                />
+            ) : (
+                <CellEx
+                    className={classes.boolcell}
+                    valueType="boolean"
+                    value={data.studied}
+                    updateValue={(value) =>
+                        updateData({
+                            ...data,
+                            action: "update",
+                            studied: value,
+                        })
+                    }
+                />
+            )}
             <CellButton
                 text={newItem ? "+" : "X"}
                 action={() => {
@@ -38,7 +58,6 @@ function ListRow({ className, data, updateData, newItem }) {
                     });
                 }}
             />
-            {/* <div className={classes.data}>{JSON.stringify(data)}</div> */}
         </div>
     );
 }
