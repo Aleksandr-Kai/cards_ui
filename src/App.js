@@ -16,6 +16,7 @@ function App() {
 				toggleListsSidebar={(event) => {
 					event.stopPropagation();
 					setShowLists(!showLists);
+					setCurrentWords([]);
 				}}
 				onLogout={() => setCurrentWords([])}
 			/>
