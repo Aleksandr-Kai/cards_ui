@@ -16,7 +16,6 @@ function App() {
 				toggleListsSidebar={(event) => {
 					event.stopPropagation();
 					setShowLists(!showLists);
-					setCurrentWords([]);
 				}}
 				onLogout={() => setCurrentWords([])}
 			/>
@@ -31,7 +30,7 @@ function App() {
 							}}
 						/>
 					)}
-					<Application words={currentWords} />
+					<Application initialWords={currentWords} />
 				</>
 			) : (
 				<AuthForm

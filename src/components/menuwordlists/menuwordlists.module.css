@@ -6,7 +6,8 @@
 }
 .menuItem {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	padding: 0 1rem;
+	padding-right: 1rem;
+	padding-left: 4px;
 	height: 2rem;
 	display: flex;
 	flex-direction: row;
@@ -61,11 +62,11 @@
 .listButton {
 	display: none;
 	height: 1.5rem;
-	padding: 0.2rem 1rem;
-	border: 1px solid #97c9a100;
+	padding: 4px;
 }
 .listButton:hover {
-	border: 1px solid #97c9a1;
+	/* border: 1px solid #97c9a1; */
+	background-color: #97c9a1;
 	border-radius: 0.4rem;
 }
 

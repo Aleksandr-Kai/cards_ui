@@ -36,7 +36,7 @@ function EditList({ data, defaultRow, className, listUpdate }) {
 			className={classNames(className, classes.container)}
 			onClick={(e) => e.stopPropagation()}
 		>
-			<ListRowHeader />
+			<ListRowHeader className={classes.header} />
 			<div className={classes.scrollable}>
 				{storedData.map((item) => {
 					return (

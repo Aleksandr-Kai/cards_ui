@@ -2,10 +2,8 @@
 	margin-bottom: 0.1rem;
 }
 .scrollable {
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: hidden;
-	-ms-overflow-style: none;
-	scrollbar-width: none;
 	margin-top: 0.5rem;
 	margin-bottom: 0.5rem;
 	padding-top: 0.5rem;
@@ -13,12 +11,27 @@
 	border-top: 1px solid rgb(85, 187, 90);
 	border-bottom: 1px solid rgb(85, 187, 90);
 	background-color: rgba(240, 248, 255, 0);
-	/* box-shadow: inset 0 0 15px rgba(85, 187, 90, 0.514); */
 	height: 100%;
+	scrollbar-width: none;
 }
-.scrollable::-webkit-scrollbar {
+/* width */
+::-webkit-scrollbar {
+	width: 5px;
 	display: none;
 }
+
+/* Track */
+::-webkit-scrollbar-track {
+	opacity: 100%;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #33b75488;
+	border-radius: 5px;
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
 .btn {
 	width: 20%;
 	background-color: aliceblue;

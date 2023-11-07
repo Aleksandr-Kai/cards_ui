@@ -4,6 +4,21 @@ import classes from "./menuwordlists.module.css";
 import { apiRequest, getRequest, postRequest } from "../../apitools.js";
 import EditList from "../../components/editlist/EditList";
 
+async function requestLists(callback) {
+    getRequest("/lists")
+        .then((data) => {
+            if (data.error) {
+                return Promise.reject({ message: data.error });
+            }
+            return data.Lists;
+        })
+        .then(callback)
+        .catch((err) => {
+            console.log(err.message);
+            callback([]);
+        });
+}
+
 async function requestWords(list) {
     return getRequest(`/lists/${list.id}/words`).then((data) => {
         return {
@@ -14,58 +29,42 @@ async function requestWords(list) {
     });
 }
 
+function filterUnstudiedWords(words) {
+    return words.filter((word) => !word.studied);
+}
+
 const MenuWordLists = ({ className, onSelect, ...props }) => {
     const [lists, setLists] = useState([]);
     const [editList, setEditList] = useState(null);
 
     const [hover, setHover] = useState(null);
-    const [words, setWords] = useState(null);
-    const [showWords, setShowWords] = useState(false);
+    const [listDetails, setListDetails] = useState(null);
     const [newListName, setNewListName] = useState(null);
 
     useEffect(() => {
-        updateLists();
+        requestLists(setLists);
     }, []);
 
-    const updateLists = () => {
-        getRequest("/lists")
-            .then((data) => {
-                if (data.error) {
-                    return Promise.reject({ message: data.error });
-                }
-                return data.Lists;
-            })
-            .then(setLists)
-            .catch((err) => {
-                console.log(err.message);
-                setLists([]);
-            });
+    const selectList = (list) => {
+        requestWords(list)
+            .then((data) => filterUnstudiedWords(data.words))
+            .then((words) =>
+                words.map((word) => {
+                    return {
+                        id: word.id,
+                        word: word.word,
+                        meaning: word.translation,
+                    };
+                })
+            )
+            .then(onSelect);
     };
 
-    const selectList = (event) => {
-        event.stopPropagation();
-
-        let id = event.target.getAttribute("id");
-        getRequest(`/lists/${id}/words`).then((data) => {
-            let words = data.Words.filter((word) => {
-                return !word.studied;
-            }).map((word) => {
-                return {
-                    id: word.id,
-                    word: word.word,
-                    meaning: word.translation,
-                };
-            });
-            onSelect(words);
-        });
-    };
-
-    const addNewList = (event) => {
-        event.stopPropagation();
-
+    // Create New List in database
+    const addNewList = () => {
         postRequest("/lists", { listName: newListName })
-            .then((resp) => {
-                updateLists();
+            .then(() => {
+                requestLists(setLists);
             })
             .catch((err) => {
                 console.log(err);
@@ -75,23 +74,13 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
             });
     };
 
-    const getWords = async (listId, all) => {
-        if (!listId) return null;
-        return getRequest(`/lists/${listId}/words`).then((data) => {
-            let rawWords = all
-                ? data.Words
-                : data.Words.filter((word) => !word.studied);
-            return { listId, words: rawWords.map((word) => word.word) };
-        });
-    };
-
-    const mover = (event) => {
+    const mouseOver = (list) => {
         if (hover) clearTimeout(hover);
         setHover(
             setTimeout(() => {
                 setHover(null);
-                getWords(event.target.getAttribute("id")).then((words) =>
-                    setWords(words)
+                requestWords(list).then((data) =>
+                    setListDetails({ listId: list.id, words: data.words })
                 );
             }, 500)
         );
@@ -103,7 +92,7 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
         const listId = target.getAttribute("id");
         apiRequest("DELETE", `/lists/${listId}`)
             .then((resp) => {
-                if (resp.error === undefined) updateLists();
+                if (resp.error === undefined) requestLists(setLists);
             })
             .catch((err) => {
                 console.log(err);
@@ -147,7 +136,7 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
             clearTimeout(hover);
             setHover(null);
         }
-        setWords(null);
+        setListDetails(null);
     };
 
     return Boolean(editList) ? (
@@ -178,9 +167,12 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
                     className={classNames(classes.listName, classes.menuItem)}
                     key={list.id}
                     id={list.id}
-                    onMouseOver={mover}
+                    onMouseOver={() => mouseOver(list)}
                     onMouseOut={mout}
-                    onClick={selectList}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        selectList(list);
+                    }}
                 >
                     <div className={classes.listBtnBlock}>
                         <div
@@ -200,12 +192,14 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
                         </div>
                     </div>
                     {list.name}
-                    {Boolean(words) && words.listId == list.id && (
+                    {Boolean(listDetails) && listDetails.listId == list.id && (
                         <ul className={classes.listWords}>
-                            {words.words.length > 0 &&
-                                words.words.map((word) => (
-                                    <li key={word}>{word}</li>
-                                ))}
+                            {listDetails.words.length > 0 &&
+                                listDetails.words
+                                    .filter((word) => !word.studied)
+                                    .map((word) => (
+                                        <li key={word.id}>{word.word}</li>
+                                    ))}
                         </ul>
                     )}
                 </div>
@@ -234,10 +228,17 @@ const MenuWordLists = ({ className, onSelect, ...props }) => {
                             }
                             autoFocus={true}
                             onKeyDown={(event) => {
-                                event.key === "Enter" && addNewList(event);
+                                event.key === "Enter" && addNewList();
                             }}
                         ></input>
-                        <button onClick={addNewList}>Ok</button>
+                        <button
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                addNewList();
+                            }}
+                        >
+                            Ok
+                        </button>
                     </>
                 )}
             </div>

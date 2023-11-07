@@ -6,7 +6,7 @@ const Card = ({ word, flipped, ...props }) => {
 	const disabled = flipped === undefined;
 	const dragStart = (event) => {
 		event.target.style.opacity = "0.1";
-		event.currentTarget.style.border = "1px dashed rgba(0, 0, 0, .2)";
+		event.currentTarget.style.outline = "1px dashed rgba(0, 0, 0, .2)";
 		event.currentTarget.classList.remove(classes.flipped);
 	};
 	const dragEnd = (event) => {

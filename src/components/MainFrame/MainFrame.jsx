@@ -4,16 +4,17 @@ import classes from "./styles.module.css";
 import Card from "../card/card";
 import Counter from "../ui/counter/counter";
 
-const MainFrame = ({ className, words }) => {
-	const [listWords, setListWords] = useState([...words]);
+const MainFrame = ({ className, initialWords }) => {
+	const [listWords, setListWords] = useState(initialWords);
 	const [studied, setStudied] = useState([]);
 	const [unstudied, setUnStudied] = useState([]);
 
 	useEffect(() => {
-		setListWords(words);
+		setListWords(initialWords);
 		setStudied([]);
 		setUnStudied([]);
-	}, [words]);
+	}, [initialWords]);
+
 	const getCurrentWord = () => {
 		return listWords.length > 0 ? listWords[0] : undefined;
 	};
@@ -24,9 +25,11 @@ const MainFrame = ({ className, words }) => {
 		setListWords(listWords.slice(1));
 		return true;
 	};
+
 	const dragOver = (event) => {
 		event.preventDefault();
 	};
+
 	const dragDrop = (event) => {
 		let attr =
 			event.target.getAttribute("type") ||
@@ -52,16 +55,50 @@ const MainFrame = ({ className, words }) => {
 	const flip = () => {
 		setFlipCard(!flippedCard && listWords.length);
 	};
+
+	const setClassNames = (className) => {
+		return listWords.length === 0 && (studied.length > 0 || unstudied.length > 0)
+			? className
+			: classNames(className, classes.hidden);
+	};
 	return (
 		<div className={classNames(className, classes.container)}>
-			<div className={classes.hdr}></div>
 			<div className={classes.lpnl}>
 				<div className={classes.stack} onClick={flip}>
 					<Card word={getCurrentWord()} flipped={flippedCard} />
 					<Counter value={listWords.length} />
 				</div>
 			</div>
-			<div className={classes.mdl}></div>
+			<div className={setClassNames(classes.mdl)}>
+				{/* <div className={classes.button} onClick={() => {}}>
+					Fihish
+				</div>
+				<br />
+				<br /> */}
+				<span className={classes.repeat}>REPEAT</span>
+				<div
+					className={classes.button}
+					onClick={() => {
+						setListWords(initialWords);
+						setStudied([]);
+						setUnStudied([]);
+					}}
+				>
+					All
+				</div>
+				{unstudied.length > 0 && (
+					<div
+						className={classes.button}
+						onClick={() => {
+							setListWords(unstudied);
+							setStudied([]);
+							setUnStudied([]);
+						}}
+					>
+						Unstudied
+					</div>
+				)}
+			</div>
 			<div className={classes.rpnl}>
 				<div className={classes.stack}>
 					<Card
@@ -72,6 +109,7 @@ const MainFrame = ({ className, words }) => {
 					/>
 					<Counter value={studied.length} />
 				</div>
+				<div className={classes.like} />
 				<div className={classes.stack}>
 					<Card
 						type="unstudied"
@@ -81,6 +119,7 @@ const MainFrame = ({ className, words }) => {
 					/>
 					<Counter value={unstudied.length} />
 				</div>
+				<div className={classes.dislike} />
 			</div>
 			<div className={classes.ftr}></div>
 		</div>

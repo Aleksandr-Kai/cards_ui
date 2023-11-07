@@ -24,3 +24,4 @@ yarn-error.log*
 
 .idea
 src/logo.svg
+public/img/like_and_dislike.png
