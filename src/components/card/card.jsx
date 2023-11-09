@@ -48,7 +48,7 @@ const Card = ({ word, flipped, ...props }) => {
 						<div
 							className={classNames(classes.cardface, classes.cardfaceback)}
 						>
-							<h1>{word.meaning}</h1>
+							<h1>{word.translation}</h1>
 						</div>
 					))}
 			</div>

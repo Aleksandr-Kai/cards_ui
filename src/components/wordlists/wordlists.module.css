@@ -77,7 +77,13 @@
 nav > div:last-child {
 	color: #97c9a1;
 	text-shadow: 0 0 1px #97c9a1;
+	margin-top: 1rem;
+	background: none;
 }
 nav > div:last-child:hover {
 	color: #2d723b;
+	background: none;
+	text-align: center;
+	justify-content: center;
+	outline: 1px dashed #2d723b;
 }

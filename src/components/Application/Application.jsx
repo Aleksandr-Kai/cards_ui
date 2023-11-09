@@ -3,17 +3,38 @@ import classNames from "classnames";
 import classes from "./styles.module.css";
 import Card from "../card/card";
 import Counter from "../ui/counter/counter";
+import { apiRequest, getRequest, postRequest } from "../../apitools.js";
 
-const MainFrame = ({ className, initialWords }) => {
-	const [listWords, setListWords] = useState(initialWords);
+async function requestWords(list) {
+	return getRequest(`/lists/${list.id}/words`).then((data) => {
+		return data.Words;
+	});
+}
+function filterUnstudiedWords(words) {
+	return words.filter((word) => !word.studied);
+}
+async function setWordAsStudied(word) {
+	apiRequest("PUT", `/lists/${word.ListId}/words/${word.id}`, {
+		Word: { studied: true },
+	}).then((data) => console.log(data));
+}
+const MainFrame = ({ className, list }) => {
+	const [listWords, setListWords] = useState([]);
 	const [studied, setStudied] = useState([]);
 	const [unstudied, setUnStudied] = useState([]);
 
-	useEffect(() => {
-		setListWords(initialWords);
+	const refreshApp = () => {
+		list
+			? requestWords(list)
+					.then((data) => filterUnstudiedWords(data))
+					.then(setListWords)
+			: setListWords([]);
 		setStudied([]);
 		setUnStudied([]);
-	}, [initialWords]);
+	};
+	useEffect(() => {
+		refreshApp();
+	}, [list]);
 
 	const getCurrentWord = () => {
 		return listWords.length > 0 ? listWords[0] : undefined;
@@ -37,6 +58,7 @@ const MainFrame = ({ className, initialWords }) => {
 		switch (attr) {
 			case "studied":
 				setStudied([listWords[0], ...studied]);
+				setWordAsStudied(listWords[0]);
 				break;
 			case "unstudied":
 				setUnStudied([listWords[0], ...unstudied]);
@@ -76,14 +98,7 @@ const MainFrame = ({ className, initialWords }) => {
 				<br />
 				<br /> */}
 				<span className={classes.repeat}>REPEAT</span>
-				<div
-					className={classes.button}
-					onClick={() => {
-						setListWords(initialWords);
-						setStudied([]);
-						setUnStudied([]);
-					}}
-				>
+				<div className={classes.button} onClick={() => refreshApp()}>
 					All
 				</div>
 				{unstudied.length > 0 && (

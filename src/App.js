@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Header from "./components/header/Header";
 import classes from "./app.module.css";
-import MenuWordLists from "./components/menuwordlists/MenuWordLists";
-import Application from "./components/MainFrame/MainFrame";
+import WordLists from "./components/wordlists/WordLists";
+import Application from "./components/Application/Application";
 import AuthForm from "./components/authform/AuthForm";
 
 function App() {
 	const [currentWords, setCurrentWords] = useState([]);
 	const [showLists, setShowLists] = useState(false);
+	const [currentList, setCurrentList] = useState(null);
 
 	return (
 		<div className={classes.wrapper} onClick={() => setShowLists(false)}>
@@ -22,15 +23,15 @@ function App() {
 			{Boolean(localStorage.token) ? (
 				<>
 					{showLists && (
-						<MenuWordLists
+						<WordLists
 							className={classes.sidebar}
-							onSelect={(words) => {
+							selectList={(list) => {
 								setShowLists(false);
-								setCurrentWords(words);
+								setCurrentList(list);
 							}}
 						/>
 					)}
-					<Application initialWords={currentWords} />
+					<Application initialWords={currentWords} list={currentList} />
 				</>
 			) : (
 				<AuthForm
