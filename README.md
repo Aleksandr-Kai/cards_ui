@@ -1,4 +1,4 @@
-# App for learning english sords
+# App for learning english words
 
 An application for learning English words.
 
