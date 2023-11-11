@@ -11,3 +11,8 @@
 	color: #28a745;
 	cursor: unset;
 }
+
+.btn:hover {
+	outline: 2px solid #28a745;
+	outline-offset: 2px;
+}

@@ -60,9 +60,10 @@ const MenuWordLists = ({ className, onSelect, selectList, ...props }) => {
 		setHover(
 			setTimeout(() => {
 				setHover(null);
-				requestWords(list).then((data) =>
-					setListDetails({ listId: list.id, words: data.words })
-				);
+				requestWords(list).then((data) => {
+					if (data === null) data = { words: [] };
+					setListDetails({ listId: list.id, words: data.words });
+				});
 			}, 500)
 		);
 	};
@@ -168,12 +169,19 @@ const MenuWordLists = ({ className, onSelect, selectList, ...props }) => {
 						</div>
 					</div>
 					{list.name}
-					{Boolean(listDetails) && listDetails.listId == list.id && (
+					{Boolean(listDetails) && listDetails.listId === list.id && (
 						<ul className={classes.listWords}>
 							{listDetails.words.length > 0 &&
 								listDetails.words
-									.filter((word) => !word.studied)
-									.map((word) => <li key={word.id}>{word.word}</li>)}
+									// .filter((word) => !word.studied)
+									.map((word) => (
+										<li
+											key={word.id}
+											className={word.studied && classes.crossout}
+										>
+											{word.word}
+										</li>
+									))}
 						</ul>
 					)}
 				</div>

@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import classes from "./styles.module.css";
 import MyInput from "../ui/input/MyInput";
 import MyButton from "../ui/button/MyButton";
-import MessageBox from "../messagebox/MessageBox";
-import { signin } from "../../apitools.js";
+import { signin, signup } from "../../apitools.js";
 
-const AuthForm = ({ resolve, reject, ...props }) => {
+const AuthForm = ({ resolve, reject, message, ...props }) => {
 	const [login, setLogin] = useState("");
 	const [pass, setPass] = useState("");
 	const [accessFail, setAccessFail] = useState(false);
@@ -18,6 +17,7 @@ const AuthForm = ({ resolve, reject, ...props }) => {
 						setLogin(event.target.value);
 						setAccessFail(false);
 					}}
+					placeholder="Имя пользователя"
 				/>
 			</div>
 			<div className={classes.authinput}>
@@ -28,9 +28,25 @@ const AuthForm = ({ resolve, reject, ...props }) => {
 						setPass(event.target.value);
 						setAccessFail(false);
 					}}
+					placeholder="Пароль"
 				/>
 			</div>
-			{accessFail ? <p>Неверный логин или пароль</p> : <p></p>}
+			<div
+				className={classes.signup}
+				onClick={() => {
+					signup(login, pass)
+						.then((r) => {
+							if (r.status) message(r.status);
+							else message(r.error);
+						})
+						.catch((err) => {
+							message(err.message);
+							setAccessFail(true);
+						});
+				}}
+			>
+				New user
+			</div>
 			<MyButton
 				className={classes.btn}
 				onClick={() => {
@@ -42,8 +58,10 @@ const AuthForm = ({ resolve, reject, ...props }) => {
 						});
 				}}
 			>
-				Войти
+				Singn in
 			</MyButton>
+			{accessFail && <p className={classes.fail}>Access denied</p>}
+			{/* {accessFail && <p className={classes.fail}>Неверный логин или пароль</p>} */}
 		</div>
 	);
 };

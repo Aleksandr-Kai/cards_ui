@@ -36,7 +36,20 @@ function EditList({ data, defaultRow, className, listUpdate }) {
 			className={classNames(className, classes.container)}
 			onClick={(e) => e.stopPropagation()}
 		>
-			<ListRowHeader className={classes.header} />
+			<ListRowHeader
+				className={classes.header}
+				checkAll={() => {
+					setStoredData(
+						storedData.map((data) => {
+							return {
+								...data,
+								studied: !storedData[0].studied,
+								action: "update",
+							};
+						})
+					);
+				}}
+			/>
 			<div className={classes.scrollable}>
 				{storedData.map((item) => {
 					return (
@@ -83,7 +96,9 @@ function EditList({ data, defaultRow, className, listUpdate }) {
 				<CellButton
 					className={classNames(classes.btn, classes.decorCell)}
 					text={"Ok"}
-					action={() => listUpdate(storedData)}
+					action={() => {
+						listUpdate(storedData);
+					}}
 				/>
 				<CellButton
 					className={classNames(classes.btn, classes.decorCell)}

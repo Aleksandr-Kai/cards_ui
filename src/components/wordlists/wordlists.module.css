@@ -87,3 +87,7 @@ nav > div:last-child:hover {
 	justify-content: center;
 	outline: 1px dashed #2d723b;
 }
+.crossout {
+	text-decoration: line-through;
+	color: rgba(128, 128, 128, 0.526);
+}

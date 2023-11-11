@@ -41,3 +41,13 @@ export function signout() {
 	localStorage.removeItem("token");
 	localStorage.removeItem("user");
 }
+
+export function signup(login, password) {
+	return fetch(BaseURL + "/auth/signup", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json;charset=utf-8",
+		},
+		body: JSON.stringify({ login, password }),
+	}).then((response) => response.json());
+}

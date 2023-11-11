@@ -6,12 +6,9 @@ import { signout } from "../../apitools.js";
 import MyNav from "../ui/nav/MyNav";
 
 const Header = ({ className, onLogout, toggleListsSidebar }) => {
-	const [userName, setUserName] = useState(localStorage.user);
-
 	const logout = () => {
 		signout();
 		onLogout();
-		setUserName("");
 	};
 	return (
 		<div className={classNames(classes.container, className)}>
@@ -26,10 +23,10 @@ const Header = ({ className, onLogout, toggleListsSidebar }) => {
 								click: toggleListsSidebar,
 							},
 							// { id: "itemActions", text: "Actions" },
-							{ id: "itemAbout", text: "About" },
+							// { id: "itemAbout", text: "About" },
 						]}
 					/>
-					<h1>{userName}</h1>
+					<span className={classes.username}>{localStorage.user}</span>
 					<MyButton onClick={logout}>X</MyButton>
 				</>
 			) : (

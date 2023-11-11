@@ -18,22 +18,20 @@ async function setWordAsStudied(word) {
 		Word: { studied: true },
 	}).then((data) => console.log(data));
 }
-const MainFrame = ({ className, list }) => {
+const MainFrame = ({ className, list, filter }) => {
 	const [listWords, setListWords] = useState([]);
 	const [studied, setStudied] = useState([]);
 	const [unstudied, setUnStudied] = useState([]);
 
-	const refreshApp = () => {
-		list
-			? requestWords(list)
-					.then((data) => filterUnstudiedWords(data))
-					.then(setListWords)
-			: setListWords([]);
-		setStudied([]);
-		setUnStudied([]);
+	const loadWords = () => {
+		requestWords(list)
+			.then((data) => data.filter(filter))
+			.then(setListWords);
 	};
 	useEffect(() => {
-		refreshApp();
+		list ? loadWords() : setListWords([]);
+		setStudied([]);
+		setUnStudied([]);
 	}, [list]);
 
 	const getCurrentWord = () => {
@@ -92,13 +90,27 @@ const MainFrame = ({ className, list }) => {
 				</div>
 			</div>
 			<div className={setClassNames(classes.mdl)}>
-				{/* <div className={classes.button} onClick={() => {}}>
-					Fihish
+				<div
+					className={classes.button}
+					onClick={() => {
+						setStudied([]);
+						setUnStudied([]);
+						loadWords();
+					}}
+				>
+					Refresh List
 				</div>
 				<br />
-				<br /> */}
+				<br />
 				<span className={classes.repeat}>REPEAT</span>
-				<div className={classes.button} onClick={() => refreshApp()}>
+				<div
+					className={classes.button}
+					onClick={() => {
+						setListWords([...studied, ...unstudied]);
+						setStudied([]);
+						setUnStudied([]);
+					}}
+				>
 					All
 				</div>
 				{unstudied.length > 0 && (

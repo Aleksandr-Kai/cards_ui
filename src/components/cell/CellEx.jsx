@@ -2,7 +2,7 @@ import classNames from "classnames";
 import classes from "./cell.module.css";
 import { useEffect, useState } from "react";
 
-function CellEx({ className, valueType, value, updateValue, title }) {
+function CellEx({ className, valueType, value, updateValue, title, onClick }) {
 	const [state, setState] = useState(value);
 	const [changed, setChanged] = useState(false);
 	useEffect(() => {
@@ -48,7 +48,11 @@ function CellEx({ className, valueType, value, updateValue, title }) {
 			);
 		case "statictext":
 			return (
-				<div className={classNames(classes.cell, className)} title={title}>
+				<div
+					className={classNames(classes.cell, className)}
+					title={title}
+					onClick={onClick}
+				>
 					{state}
 				</div>
 			);

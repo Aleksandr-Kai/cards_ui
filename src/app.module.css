@@ -1,16 +1,3 @@
-* {
-	margin: 0;
-	padding: 0;
-}
-html,
-body {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-content: center;
-	--header-height: 4rem;
-}
 .wrapper {
 	width: 70rem;
 	height: 50rem;
@@ -42,6 +29,7 @@ body {
 	padding: 1rem;
 	z-index: 10;
 }
+
 @media (max-width: 1200px) {
 	.wrapper {
 		width: 100%;

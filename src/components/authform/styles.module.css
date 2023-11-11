@@ -1,28 +1,31 @@
 .container {
-	z-index: 1000;
-	padding: 0 1rem;
+	z-index: 10;
+	padding: 0.5rem 1rem;
 	background-color: rgb(193, 193, 193);
 	border-radius: 1rem;
 	box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.583);
-	--width: 18rem;
-	--height: 8rem;
-	width: var(--width);
-	height: var(--height);
 	position: absolute;
-	left: calc(50% - var(--width) / 2);
-	top: calc(50% - var(--height) / 2);
 	display: flex;
 	flex-direction: column;
 	align-items: end;
-	justify-content: center;
+	gap: 5px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
-.container p {
-	position: absolute;
-	left: 1rem;
-	bottom: 1.3rem;
+.fail {
 	color: brown;
-	text-shadow: 2px 2px 2px gray;
+	text-shadow: 1px 1px 2px gray;
+	outline: 1px solid brown;
+	background-color: rgba(165, 42, 42, 0.093);
+	padding: 6px;
+	text-transform: uppercase;
+	position: absolute;
+	transform: rotateZ(-20deg);
+	z-index: -1;
+	top: 40%;
+	left: 30%;
 }
 
 .authinput {
@@ -30,9 +33,15 @@
 	display: flex;
 	column-gap: 5px;
 	align-items: center;
-	margin-top: 5px;
 }
 
-.btn {
-	margin-top: 5px;
+.signup {
+	color: rgba(74, 74, 74, 0.546);
+	cursor: pointer;
+}
+
+.signup:hover {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	color: rgb(49, 49, 49);
 }

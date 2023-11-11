@@ -3,7 +3,7 @@ import classes from "./listrow.module.css";
 import classesEx from "./celldecor.module.css";
 import CellEx from "../cell/CellEx";
 
-function ListRowHeader({ className }) {
+function ListRowHeader({ className, checkAll }) {
 	return (
 		<div className={classNames(className, classes.row)}>
 			<CellEx
@@ -21,6 +21,7 @@ function ListRowHeader({ className }) {
 				valueType="statictext"
 				value={"☑"}
 				title={"Word status"}
+				onClick={checkAll}
 			/>
 			<CellEx
 				className={classNames(classes.boolcell, classesEx.decorHeader)}
