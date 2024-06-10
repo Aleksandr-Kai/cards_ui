@@ -29,7 +29,7 @@ async function requestWords(list) {
 	});
 }
 
-const MenuWordLists = ({ className, onSelect, selectList, ...props }) => {
+const MenuWordLists = ({ className, selectList, ...props }) => {
 	const [lists, setLists] = useState([]);
 	const [editList, setEditList] = useState(null);
 

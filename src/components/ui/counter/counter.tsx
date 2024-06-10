@@ -2,7 +2,12 @@ import React from "react";
 import classNames from "classnames";
 import classes from "./styles.module.css";
 
-const Counter = ({ className, value, ...props }) => {
+type TCounterProps = {
+	className?: string,
+	value: number,
+};
+
+const Counter = ({ className, value }: TCounterProps) => {
 	return (
 		<div className={classNames(className, classes.counter)}>
 			{value > 0 ? (

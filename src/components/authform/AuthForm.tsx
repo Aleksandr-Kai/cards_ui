@@ -4,7 +4,13 @@ import MyInput from "../ui/input/MyInput";
 import MyButton from "../ui/button/MyButton";
 import { signin, signup } from "../../apitools.js";
 
-const AuthForm = ({ resolve, reject, message, ...props }) => {
+type TAuthFormProps = {
+	resolve: () => void;
+	reject: (data: unknown) => void;
+	message: (text: string) => void;
+};
+
+const AuthForm = ({ resolve, reject, message }: TAuthFormProps) => {
 	const [login, setLogin] = useState("");
 	const [pass, setPass] = useState("");
 	const [accessFail, setAccessFail] = useState(false);
@@ -14,7 +20,7 @@ const AuthForm = ({ resolve, reject, message, ...props }) => {
 				Login:{" "}
 				<MyInput
 					onChange={(event) => {
-						setLogin(event.target.value);
+						setLogin((event.target as HTMLInputElement).value);
 						setAccessFail(false);
 					}}
 					placeholder="Имя пользователя"
@@ -25,7 +31,7 @@ const AuthForm = ({ resolve, reject, message, ...props }) => {
 				<MyInput
 					type={"password"}
 					onChange={(event) => {
-						setPass(event.target.value);
+						setPass((event.target as HTMLInputElement).value);
 						setAccessFail(false);
 					}}
 					placeholder="Пароль"

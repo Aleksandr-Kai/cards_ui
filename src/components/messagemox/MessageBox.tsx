@@ -1,5 +1,7 @@
+import { TDialog } from "src/tools/types";
 import classes from "./messagebox.module.css";
-function MessageBox({ title, text, actions }) {
+
+function MessageBox({ title, text, actions }: TDialog) {
 	return (
 		<div className={classes.messagebox}>
 			<div className={classes.msgTitle}>{title}</div>

@@ -1,38 +1,48 @@
-import React, { useEffect, useState } from "react";
+import { DragEvent, useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
 import classes from "./styles.module.css";
-import Card from "../card/card";
+import { Card } from "../card/card";
 import Counter from "../ui/counter/counter";
-import { apiRequest, getRequest, postRequest } from "../../apitools.js";
+import { apiRequest, getRequest } from "../../apitools.js";
+import { TWordList } from "../../tools/types";
+import { TApiWordModel } from "src/api/types";
 
-async function requestWords(list) {
+async function requestWords(list: TWordList) {
 	return getRequest(`/lists/${list.id}/words`).then((data) => {
 		return data.Words;
 	});
 }
-function filterUnstudiedWords(words) {
-	return words.filter((word) => !word.studied);
-}
-async function setWordAsStudied(word) {
+// function filterUnstudiedWords(words: TWord[]) {
+// 	return words.filter((word) => !word.studied);
+// }
+async function setWordAsStudied(word: TApiWordModel) {
 	apiRequest("PUT", `/lists/${word.ListId}/words/${word.id}`, {
 		Word: { studied: true },
 	}).then((data) => console.log(data));
 }
-const MainFrame = ({ className, list, filter }) => {
+
+type TMainFrameProps = {
+	className?: string;
+	list: TWordList | null;
+	filter: (data: unknown) => unknown;
+};
+export const MainFrame = ({ className, list, filter }: TMainFrameProps) => {
 	const [listWords, setListWords] = useState([]);
 	const [studied, setStudied] = useState([]);
 	const [unstudied, setUnStudied] = useState([]);
 
-	const loadWords = () => {
-		requestWords(list)
-			.then((data) => data.filter(filter))
-			.then(setListWords);
-	};
+	const loadWords = useCallback(() => {
+		list &&
+			requestWords(list)
+				.then((data) => data.filter(filter))
+				.then(setListWords);
+	}, [filter, list]);
+
 	useEffect(() => {
 		list ? loadWords() : setListWords([]);
 		setStudied([]);
 		setUnStudied([]);
-	}, [list]);
+	}, [list, loadWords]);
 
 	const getCurrentWord = () => {
 		return listWords.length > 0 ? listWords[0] : undefined;
@@ -45,14 +55,15 @@ const MainFrame = ({ className, list, filter }) => {
 		return true;
 	};
 
-	const dragOver = (event) => {
+	const dragOver = (event: DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
 	};
 
-	const dragDrop = (event) => {
+	const dragDrop = (event: DragEvent<HTMLDivElement>) => {
+		const target = event.target as HTMLElement;
+		const parentNode = target.parentNode as HTMLElement;
 		let attr =
-			event.target.getAttribute("type") ||
-			event.target.parentNode.getAttribute("type");
+			target.getAttribute("data-type") || parentNode.getAttribute("data-type");
 		switch (attr) {
 			case "studied":
 				setStudied([listWords[0], ...studied]);
@@ -73,10 +84,10 @@ const MainFrame = ({ className, list, filter }) => {
 	};
 	const [flippedCard, setFlipCard] = useState(false);
 	const flip = () => {
-		setFlipCard(!flippedCard && listWords.length);
+		setFlipCard(!flippedCard && listWords.length > 0);
 	};
 
-	const setClassNames = (className) => {
+	const setClassNames = (className: string) => {
 		return listWords.length === 0 && (studied.length > 0 || unstudied.length > 0)
 			? className
 			: classNames(className, classes.hidden);
@@ -152,5 +163,3 @@ const MainFrame = ({ className, list, filter }) => {
 		</div>
 	);
 };
-
-export default MainFrame;
