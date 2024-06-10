@@ -13,24 +13,25 @@ type TCardProps = {
 
 export const Card = ({ type, word, flipped, onDragOver, onDrop }: TCardProps) => {
 	const disabled = flipped === undefined;
+	const [flipCard, setFlipCard] = useState(classes.card);
+
+	useEffect(() => {
+		setFlipCard(flipped ? classNames(classes.card, classes.flipped) : classes.card);
+	}, [flipped]);
+
 	const dragStart = (event: DragEvent<HTMLDivElement>) => {
 		(event.target as HTMLElement).style.opacity = "0.1";
 		(event.currentTarget as HTMLElement).style.outline =
 			"1px dashed rgba(0, 0, 0, .2)";
 		(event.currentTarget as HTMLElement).classList.remove(classes.flipped);
 	};
+
 	const dragEnd = (event: DragEvent<HTMLDivElement>) => {
 		(event.target as HTMLElement).removeAttribute("style");
 		(event.currentTarget as HTMLElement).removeAttribute("style");
 		(event.currentTarget as HTMLElement).classList.remove(classes.flipped);
 	};
-	const getClass = (flipped: boolean) => {
-		return flipped ? classNames(classes.card, classes.flipped) : classes.card;
-	};
-	const [flipCard, setFlipCard] = useState(getClass(flipped!));
-	useEffect(() => {
-		setFlipCard(getClass(flipped!));
-	}, [flipped]);
+
 	return (
 		<div
 			className={classes.container}
